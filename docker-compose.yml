@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+ postgres:
+  image: postgres:15
+  container_name: micro-commerce-postgres
+  environment:
+    POSTGRES_USER: root
+    POSTGRES_PASSWORD: root
+    POSTGRES_DB: microcommerce
+  ports:
+    - "5432:5432"
+ zookeeper:
+  image: wurstmeister/zookeeper
+  container_name: micro-commerce-zookeeper
+  ports:
+    - "2181:2181"
+ kafka:
+  image: wurstmeister/kafka
+  container_name: micro-commerce-kafka
+  environment:
+   KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+   KAFKA_ADVERTISED_HOST_NAME: localhost
+   KAFKA_CREATE_TOPICS: "orders:1:1,inventory:1:1"
+  ports:
+   - "9092:9092"
+
+
